@@ -3,10 +3,6 @@ package jcubed.wakemewhen;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
-
-//test
-//test2
-
 public class MainActivity extends AppCompatActivity {
 
     @Override
