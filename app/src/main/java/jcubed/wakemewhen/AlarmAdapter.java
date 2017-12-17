@@ -5,6 +5,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Switch;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 
@@ -44,6 +46,16 @@ public class AlarmAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         // Get view for row item
         View rowView = inflater.inflate(R.layout.list_item_alarm, parent, false);
+        TextView titleTextView =
+                (TextView) rowView.findViewById(R.id.alarm_list_title);
+
+        // Get address element
+        TextView addrTextView =
+                (TextView) rowView.findViewById(R.id.alarm_list_address);
+
+        // Get switch element
+        Switch swtichView =
+                (Switch) rowView.findViewById(R.id.alarm_list_switch);
 
         return rowView;
     }
