@@ -7,20 +7,39 @@ package jcubed.wakemewhen;
 public class Alarm {
     private String name;
     private Double[] location = new Double[2];
+    private String address = null;
     private int distance;
     private int time;
     private String media = "someDefaultMediaPath";
     private boolean timeFlag = false;
     private boolean vibrateFlag = true;
+    private boolean isActive = false;
 
     Alarm(String n, Double[] loc, int d, int t, String m, boolean tFlag, boolean vFlag){
         name = n;
         location = loc;
+        address = "lat = " + loc[0].toString() + "\nlong = " + loc[1].toString();
         distance = d;
         time = t;
         media = m;
         timeFlag = tFlag;
         vibrateFlag = vFlag;
+    }
+
+    public boolean isActive() {
+        return isActive;
+    }
+
+    public void setActive(boolean active) {
+        isActive = active;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
     }
 
     public String getName() {

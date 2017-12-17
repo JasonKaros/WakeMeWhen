@@ -54,8 +54,13 @@ public class AlarmAdapter extends BaseAdapter {
                 (TextView) rowView.findViewById(R.id.alarm_list_address);
 
         // Get switch element
-        Switch swtichView =
+        Switch switchView =
                 (Switch) rowView.findViewById(R.id.alarm_list_switch);
+
+        Alarm alarm = (Alarm) getItem(position);
+        addrTextView.setText(alarm.getAddress());
+        titleTextView.setText(alarm.getName());
+        switchView.setChecked(alarm.isActive());
 
         return rowView;
     }
