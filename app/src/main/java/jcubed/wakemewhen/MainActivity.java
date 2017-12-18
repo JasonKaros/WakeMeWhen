@@ -27,6 +27,7 @@ public class MainActivity extends AppCompatActivity {
     AlarmAdapter mAdapter;
     Context mContext;
     DBAdapter db;
+    int ALARM_CREATE_REQUEST = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
         db.open();
 
         //retrieve alarms
-        final List<Alarm> alarmList = db.getAllAlarms();
+        final ArrayList<Alarm> mArrayList = db.getAllAlarms();
 
         //create new adapter and populate with AlarmList
         mAdapter = new AlarmAdapter(this, mArrayList);
@@ -51,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 // get user selection
-                Alarm selectedAlarm = alarmList.get(position);
+                Alarm selectedAlarm = mArrayList.get(position);
 
                 // create new intent
                 Intent detailIntent = new Intent(context, AlarmEdit.class);
@@ -70,14 +71,13 @@ public class MainActivity extends AppCompatActivity {
         inflater.inflate(R.menu.main_menu, menu);
         return true;
     }
- //   @Override
-//    public boolean onOptionsItemSelected(MenuItem item) {
-//        switch (item.getItemId()) {
-//            case
-//                Intent intent = new Intent("j.cubed.booklibrary.BookActivity");
-//                intent.putExtra("id", -2);
-//                startActivityForResult(intent, BOOK_RECORD_REQUEST);
-//        }
-//        return false;
-//    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.add_alarm:
+                Intent intent = new Intent(this, AlarmEdit.class);
+                startActivityForResult(intent, ALARM_CREATE_REQUEST);
+        }
+        return false;
+    }
 }
