@@ -41,6 +41,14 @@ public class MainActivity extends AppCompatActivity {
         db = new DBAdapter(this);
         db.open();
 
+        Alarm a1 = new Alarm("Work", new Double[]{-100.1, 37.5}, 5,
+                1, "1 Broadway, NY, NY");
+        Alarm a2 = new Alarm("School", new Double[]{-88.1, 32.5}, 2,
+                0, "270 Mohegan Ave, New London, CT");
+
+        db.addAlarm(a1);
+        db.addAlarm(a2);
+
         //retrieve alarms
         final ArrayList<Alarm> mAlarmList = db.getAllAlarms();
 

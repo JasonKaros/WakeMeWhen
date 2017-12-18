@@ -78,11 +78,16 @@ public class DBAdapter {
     }
 
     //---insert a contact into the database---
-    public void addAlarm(Alarm alarm) {
+    public long addAlarm(Alarm alarm) {
         ContentValues initialValues = new ContentValues();
         initialValues.put(KEY_TITLE, alarm.getName());
         initialValues.put(KEY_ADDRESS, alarm.getAddress());
-        long q = db.insert(DATABASE_TABLE, null, initialValues);  //Return new rowID or -1
+        initialValues.put(KEY_DISTANCE, alarm.getDistance());
+        initialValues.put(KEY_V_FLAG, alarm.getVibrateFlag());
+        initialValues.put(KEY_LATITUDE, alarm.getLatitude());
+        initialValues.put(KEY_LONGITUDE, alarm.getLongitude());
+        long id = db.insert(DATABASE_TABLE, null, initialValues);  //Return new rowID or -1
+        return id;
     }
 
     //---deletes a particular contact by its rowID---
@@ -108,6 +113,7 @@ public class DBAdapter {
                     alarms.getString(6)));
             alarms.moveToNext();
         }
+        alarms.close();
         return alarmList;
     }
     //---retrieves a particular alarm by id---
