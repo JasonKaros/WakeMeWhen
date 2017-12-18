@@ -5,6 +5,7 @@ package jcubed.wakemewhen;
  */
 
 public class Alarm {
+    private double id;
     private String name;
     private Double[] location = new Double[2];
     private String address = null;
@@ -24,6 +25,14 @@ public class Alarm {
         media = m;
         timeFlag = tFlag;
         vibrateFlag = vFlag;
+    }
+
+    public double getId() {
+        return id;
+    }
+
+    public void setId(double id) {
+        this.id = id;
     }
 
     public boolean isActive() {
