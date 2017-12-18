@@ -17,9 +17,9 @@ public class DBAdapter {
     private static final String KEY_TITLE = "title";
     private static final String KEY_LOCATION = "address";
     private static final String KEY_DISTANCE = "distance";
-    private static final boolean KEY_V_FLAG = false;
+    private static final int KEY_V_FLAG = 0;
     private static final String TAG = "DBAdapter";
-    private static final String DATABASE_NAME = "MyDB";
+    private static final String DATABASE_NAME = "WakeMeWhen";
     private static final String DATABASE_TABLE = "alarms";
     private static final int DATABASE_VERSION = 1;
     private static final String DATABASE_CREATE = "create table " + DATABASE_TABLE +
@@ -97,7 +97,7 @@ public class DBAdapter {
             Double[] doub = new Double[2];
             doub[0] = Double.parseDouble(s.substring(6,17));
             doub[1] = Double.parseDouble(s.substring(23));
-            alarmList.add(new Alarm(alarms.getString(1), doub, alarms.getString(2), alarms.getWantsAllOnMoveCalls(3)));
+            alarmList.add(new Alarm(alarms.getString(1), doub, alarms.getString(2), alarms.getInt(3));
             alarms.moveToNext();
         }
         return alarmList;

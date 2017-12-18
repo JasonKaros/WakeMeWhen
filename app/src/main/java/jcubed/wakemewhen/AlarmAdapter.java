@@ -61,7 +61,7 @@ public class AlarmAdapter extends BaseAdapter {
         Alarm alarm = (Alarm) getItem(position);
         addrTextView.setText(alarm.getAddress());
         titleTextView.setText(alarm.getName());
-        switchView.setChecked(alarm.isActive());
+        switchView.setChecked(alarm.isActive() > 0);
 
         return rowView;
     }

@@ -10,10 +10,10 @@ public class Alarm {
     private Double[] location = new Double[2];
     private String address = null;
     private int distance;
-    private boolean vibrateFlag = true;
-    private boolean isActive = false;
+    private int vibrateFlag = 1;
+    private int isActive = 0;
 
-    Alarm(String n, Double[] loc, int d, boolean vFlag){
+    Alarm(String n, Double[] loc, int d, int vFlag){
         name = n;
         location = loc;
         address = "lat = " + loc[0].toString() + "\nlong = " + loc[1].toString();
@@ -29,11 +29,11 @@ public class Alarm {
         this.id = id;
     }
 
-    public boolean isActive() {
+    public int isActive() {
         return isActive;
     }
 
-    public void setActive(boolean active) {
+    public void setActive(int active) {
         isActive = active;
     }
 
@@ -69,11 +69,11 @@ public class Alarm {
         this.distance = distance;
     }
 
-    public boolean isVibrateFlag() {
+    public int isVibrate() {
         return vibrateFlag;
     }
 
-    public void setVibrateFlag(boolean vibrateFlag) {
+    public void setVibrate(int vibrateFlag) {
         this.vibrateFlag = vibrateFlag;
     }
 }
