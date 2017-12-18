@@ -13,35 +13,12 @@ public class Alarm {
     private int vibrateFlag = 1;
     private int isActive = 0;
 
-
-
     Alarm(String name, Double[] loc, int d, int vFlag, String addr){
         this.name = name;
         location = loc;
         distance = d;
         vibrateFlag = vFlag;
-
         address = addr;
-    }
-
-    public double getLatitude() { return location[0]; }
-
-    public double getLongitude() { return location[1]; }
-
-    public int getVibrateFlag() {
-        return vibrateFlag;
-    }
-
-    public void setVibrateFlag(int vibrateFlag) {
-        this.vibrateFlag = vibrateFlag;
-    }
-
-    public int getIsActive() {
-        return isActive;
-    }
-
-    public void setIsActive(int isActive) {
-        this.isActive = isActive;
     }
 
     public double getId() {
