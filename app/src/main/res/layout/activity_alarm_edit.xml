@@ -6,7 +6,8 @@
     android:layout_height="match_parent"
     tools:context="jcubed.wakemewhen.AlarmEdit">
 
-    <Button
+    <!--    Probably don't need this button         -->
+        <Button
         android:id="@+id/addr_btn"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -18,6 +19,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+
 
     <SeekBar
         android:id="@+id/distance_slider"
@@ -75,6 +78,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
         android:layout_marginTop="32dp"
         android:text="Vibrate on Alarm"
         app:layout_constraintStart_toStartOf="parent"
