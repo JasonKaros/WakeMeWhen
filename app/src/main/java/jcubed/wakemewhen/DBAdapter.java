@@ -26,7 +26,8 @@ public class DBAdapter {
     private static final int DATABASE_VERSION = 1;
     private static final String DATABASE_CREATE = "create table " + DATABASE_TABLE +
             " (" + KEY_ROWID + " integer primary key autoincrement, "
-            + KEY_TITLE + " text not null, " + KEY_DISTANCE + " integer not null, " + KEY_V_FLAG + " integer not null, "+ KEY_ADDRESS + " text not null, "
+            + KEY_TITLE + " text not null, " + KEY_DISTANCE + " integer not null, " + KEY_V_FLAG
+            + " integer not null, "+ KEY_ADDRESS + " text not null, "
             + KEY_LATITUDE + " real not null, " + KEY_LONGITUDE + " real not null" + ");";
 
     //Create table with columns: ROWID, TITLE, DISTANCE, V_FLAG, ADDRESS, LATITUDE and LONGITUDE----
@@ -92,34 +93,37 @@ public class DBAdapter {
 
     //---retrieves all the alarms in DB---
     public LinkedList<Alarm> getAllAlarms() {
+        // query for alarms w/ columns: id, name, lat, long, distance, vflag, address
         Cursor alarms = db.query(DATABASE_TABLE, new String[] {KEY_ROWID, KEY_TITLE,
-                KEY_ADDRESS}, null, null, null, null, null);
+                KEY_LATITUDE, KEY_LONGITUDE, KEY_DISTANCE, KEY_V_FLAG, KEY_ADDRESS},
+                null, null, null, null, null);
         alarms.moveToFirst();
         LinkedList alarmList = new LinkedList();
 
         while (!alarms.isAfterLast()){
-            String s = alarms.getString(4);
-            Double[] doub = new Double[2];
-            doub[0] = Double.parseDouble(s.substring(6,17));
-            doub[1] = Double.parseDouble(s.substring(23));
-            alarmList.add(new Alarm(alarms.getString(1), doub, alarms.getInt(2), alarms.getInt(3)));
+            double lat = alarms.getDouble(2);
+            double lon = alarms.getDouble(3);
+            Double[] latLonArray = new Double[]{lat, lon};
+            alarmList.add(new Alarm(alarms.getString(1), latLonArray, alarms.getInt(4), alarms.getInt(5),
+                    alarms.getString(6)));
             alarms.moveToNext();
         }
         return alarmList;
     }
     //---retrieves a particular alarm by id---
     public Alarm searchAlarm(int id) throws SQLException {
-        Cursor mCursor =
-                db.query(true, DATABASE_TABLE, new String[] {KEY_ROWID,
-                                KEY_TITLE, KEY_ADDRESS}, KEY_ROWID + "=" + id, null,
+        Cursor alarmCursor =
+                db.query(true, DATABASE_TABLE, new String[] {KEY_ROWID, KEY_TITLE,
+                        KEY_LATITUDE, KEY_LONGITUDE, KEY_DISTANCE, KEY_V_FLAG, KEY_ADDRESS},
+                        KEY_ROWID + "=" + id, null,
                         null, null, null, null);
-        mCursor.moveToFirst();
-        String s = mCursor.getString(4);
-        Double[] doub = new Double[2];
-        doub[0] = Double.parseDouble(s.substring(6,17));
-        doub[1] = Double.parseDouble(s.substring(23));
-        Alarm alarm = new Alarm(mCursor.getString(1), doub ,mCursor.getInt(2), mCursor.getInt(3));
-        mCursor.close();
+        alarmCursor.moveToFirst();
+        double lat = alarmCursor.getDouble(2);
+        double lon = alarmCursor.getDouble(3);
+        Double[] latLonArray = new Double[] {lat, lon};
+        Alarm alarm = new Alarm(alarmCursor.getString(1), latLonArray, alarmCursor.getInt(4),
+                alarmCursor.getInt(5),alarmCursor.getString(6));
+        alarmCursor.close();
         return alarm;
     }
 
