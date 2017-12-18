@@ -15,16 +15,21 @@ import java.util.List;
 public class DBAdapter {
     private static final String KEY_ROWID = "_id";
     private static final String KEY_TITLE = "title";
-    private static final String KEY_LOCATION = "address";
+    private static final String KEY_ADDRESS = "address";
     private static final String KEY_DISTANCE = "distance";
-    private static final int KEY_V_FLAG = 0;
+    private static final String KEY_V_FLAG = "vflag";
+    private static final String KEY_LATITUDE = "latitude";
+    private static final String KEY_LONGITUDE = "longitude";
     private static final String TAG = "DBAdapter";
     private static final String DATABASE_NAME = "WakeMeWhen";
     private static final String DATABASE_TABLE = "alarms";
     private static final int DATABASE_VERSION = 1;
     private static final String DATABASE_CREATE = "create table " + DATABASE_TABLE +
             " (" + KEY_ROWID + " integer primary key autoincrement, "
-            + KEY_TITLE + " text not null, " + KEY_DISTANCE + " text not null, " + KEY_V_FLAG + " text not null, "+ KEY_LOCATION + " text not null);";
+            + KEY_TITLE + " text not null, " + KEY_DISTANCE + " integer not null, " + KEY_V_FLAG + " integer not null, "+ KEY_ADDRESS + " text not null, "
+            + KEY_LATITUDE + " real not null, " + KEY_LONGITUDE + " real not null" + ");";
+
+    //Create table with columns: ROWID, TITLE, DISTANCE, V_FLAG, ADDRESS, LATITUDE and LONGITUDE----
 
     final Context context;
     DatabaseHelper DBHelper;
@@ -75,7 +80,7 @@ public class DBAdapter {
     public void addAlarm(Alarm alarm) {
         ContentValues initialValues = new ContentValues();
         initialValues.put(KEY_TITLE, alarm.getName());
-        initialValues.put(KEY_LOCATION, alarm.getAddress());
+        initialValues.put(KEY_ADDRESS, alarm.getAddress());
         long q = db.insert(DATABASE_TABLE, null, initialValues);  //Return new rowID or -1
     }
 
@@ -85,10 +90,10 @@ public class DBAdapter {
     }
 
 
-    //---retrieves all the contacts---
+    //---retrieves all the alarms in DB---
     public LinkedList<Alarm> getAllAlarms() {
         Cursor alarms = db.query(DATABASE_TABLE, new String[] {KEY_ROWID, KEY_TITLE,
-                KEY_LOCATION}, null, null, null, null, null);
+                KEY_ADDRESS}, null, null, null, null, null);
         alarms.moveToFirst();
         LinkedList alarmList = new LinkedList();
 
@@ -97,32 +102,32 @@ public class DBAdapter {
             Double[] doub = new Double[2];
             doub[0] = Double.parseDouble(s.substring(6,17));
             doub[1] = Double.parseDouble(s.substring(23));
-            alarmList.add(new Alarm(alarms.getString(1), doub, alarms.getString(2), alarms.getInt(3));
+            alarmList.add(new Alarm(alarms.getString(1), doub, alarms.getInt(2), alarms.getInt(3)));
             alarms.moveToNext();
         }
         return alarmList;
     }
-    //---retrieves a particular book---
+    //---retrieves a particular alarm by id---
     public Alarm searchAlarm(int id) throws SQLException {
         Cursor mCursor =
                 db.query(true, DATABASE_TABLE, new String[] {KEY_ROWID,
-                                KEY_TITLE, KEY_LOCATION}, KEY_ROWID + "=" + id, null,
+                                KEY_TITLE, KEY_ADDRESS}, KEY_ROWID + "=" + id, null,
                         null, null, null, null);
         mCursor.moveToFirst();
         String s = mCursor.getString(4);
         Double[] doub = new Double[2];
         doub[0] = Double.parseDouble(s.substring(6,17));
         doub[1] = Double.parseDouble(s.substring(23));
-        Alarm alarm = new Alarm(mCursor.getString(1), doub ,mCursor.getString(2), mCursor.getWantsAllOnMoveCalls(3));
+        Alarm alarm = new Alarm(mCursor.getString(1), doub ,mCursor.getInt(2), mCursor.getInt(3));
         mCursor.close();
         return alarm;
     }
 
-    //---updates a contact---
+    //---updates an alarm---
     public void updateAlarm(int id, String title, String location) {
         ContentValues args = new ContentValues();
         args.put(KEY_TITLE, title);
-        args.put(KEY_LOCATION, location);
+        args.put(KEY_ADDRESS, location);
         db.update(DATABASE_TABLE, args, KEY_ROWID + "=" + id, null);
     }
 
