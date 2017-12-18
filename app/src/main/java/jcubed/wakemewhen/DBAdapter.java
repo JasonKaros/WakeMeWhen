@@ -120,7 +120,7 @@ public class DBAdapter {
         alarmCursor.moveToFirst();
         double lat = alarmCursor.getDouble(2);
         double lon = alarmCursor.getDouble(3);
-        Double[] latLonArray = new Double[] {lat, lon};
+        Double[] latLonArray = new Double[] {2,3};
         Alarm alarm = new Alarm(alarmCursor.getString(1), latLonArray, alarmCursor.getInt(4),
                 alarmCursor.getInt(5),alarmCursor.getString(6));
         alarmCursor.close();
