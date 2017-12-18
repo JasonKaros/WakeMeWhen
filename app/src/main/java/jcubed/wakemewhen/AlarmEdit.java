@@ -5,6 +5,8 @@ import android.os.Bundle;
 
 public class AlarmEdit extends AppCompatActivity {
 
+    private Alarm usrAlarm;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
