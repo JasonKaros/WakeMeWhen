@@ -9,6 +9,7 @@ import android.widget.Switch;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * AlarmAdapter for populating MainActivity ListView
@@ -63,5 +64,12 @@ public class AlarmAdapter extends BaseAdapter {
         switchView.setChecked(alarm.isActive());
 
         return rowView;
+    }
+
+    public List<Alarm> getAlarms() {
+        List<Alarm> l = new ArrayList<Alarm>();
+
+
+        return l;
     }
 }

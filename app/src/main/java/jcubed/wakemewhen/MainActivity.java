@@ -6,6 +6,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /*Jason Karos, Brian Ward, Camden Wagner
 * WakeMeWhen
@@ -25,7 +26,7 @@ public class MainActivity extends AppCompatActivity {
         mListView = (ListView) findViewById(R.id.alarm_lv);
 
         //retrieve alarms
-        final ArrayList<Alarm> mArrayList = //fill list with alarms from ???;
+        List<Alarm> alarmList = mAdapter.getAlarms();
 
         //create new adapter and populate with AlarmList
         mAdapter = new AlarmAdapter(this, mArrayList);
