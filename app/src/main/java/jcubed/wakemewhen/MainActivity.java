@@ -75,6 +75,7 @@ public class MainActivity extends AppCompatActivity {
     }
     @Override
 
+    //opens mapsactivity
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.add_alarm:
