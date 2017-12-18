@@ -15,14 +15,16 @@ import java.util.List;
 public class DBAdapter {
     private static final String KEY_ROWID = "_id";
     private static final String KEY_TITLE = "title";
-    private static final String KEY_AUTHOR = "author";
+    private static final String KEY_LOCATION = "address";
+    private static final String KEY_DISTANCE = "distance";
+    private static final boolean KEY_V_FLAG = false;
     private static final String TAG = "DBAdapter";
     private static final String DATABASE_NAME = "MyDB";
-    private static final String DATABASE_TABLE = "books";
+    private static final String DATABASE_TABLE = "alarms";
     private static final int DATABASE_VERSION = 1;
     private static final String DATABASE_CREATE = "create table " + DATABASE_TABLE +
             " (" + KEY_ROWID + " integer primary key autoincrement, "
-            + KEY_TITLE + " text not null, " + KEY_AUTHOR + " text not null);";
+            + KEY_TITLE + " text not null, " + KEY_DISTANCE + " text not null, " + KEY_V_FLAG + " text not null, "+ KEY_LOCATION + " text not null);";
 
     final Context context;
     DatabaseHelper DBHelper;
@@ -72,47 +74,55 @@ public class DBAdapter {
     //---insert a contact into the database---
     public void addAlarm(Alarm alarm) {
         ContentValues initialValues = new ContentValues();
-        initialValues.put(KEY_TITLE, book.getTitle());
-        initialValues.put(KEY_AUTHOR, book.getAuthor());
+        initialValues.put(KEY_TITLE, alarm.getName());
+        initialValues.put(KEY_LOCATION, alarm.getAddress());
         long q = db.insert(DATABASE_TABLE, null, initialValues);  //Return new rowID or -1
     }
 
     //---deletes a particular contact by its rowID---
-    public void deleteBook(Book book) {
-        db.delete(DATABASE_TABLE, KEY_ROWID + "=" + book.getID(), null);
+    public void deleteAlarm(Alarm alarm) {
+        db.delete(DATABASE_TABLE, KEY_ROWID + "=" + alarm.getId(), null);
     }
 
 
     //---retrieves all the contacts---
-    public LinkedList<Book> getAllBooks() {
-        Cursor books = db.query(DATABASE_TABLE, new String[] {KEY_ROWID, KEY_TITLE,
-                KEY_AUTHOR}, null, null, null, null, null);
-        books.moveToFirst();
-        LinkedList bookList = new LinkedList();
+    public LinkedList<Alarm> getAllAlarms() {
+        Cursor alarms = db.query(DATABASE_TABLE, new String[] {KEY_ROWID, KEY_TITLE,
+                KEY_LOCATION}, null, null, null, null, null);
+        alarms.moveToFirst();
+        LinkedList alarmList = new LinkedList();
 
-        while (!books.isAfterLast()){
-            bookList.add(new Book(books.getInt(0), books.getString(1), books.getString(2)));
-            books.moveToNext();
+        while (!alarms.isAfterLast()){
+            String s = alarms.getString(4);
+            Double[] doub = new Double[2];
+            doub[0] = Double.parseDouble(s.substring(6,17));
+            doub[1] = Double.parseDouble(s.substring(23));
+            alarmList.add(new Alarm(alarms.getString(1), doub, alarms.getString(2), alarms.getWantsAllOnMoveCalls(3)));
+            alarms.moveToNext();
         }
-        return bookList;
+        return alarmList;
     }
     //---retrieves a particular book---
-    public Book searchBook(int id) throws SQLException {
+    public Alarm searchAlarm(int id) throws SQLException {
         Cursor mCursor =
                 db.query(true, DATABASE_TABLE, new String[] {KEY_ROWID,
-                                KEY_TITLE, KEY_AUTHOR}, KEY_ROWID + "=" + id, null,
+                                KEY_TITLE, KEY_LOCATION}, KEY_ROWID + "=" + id, null,
                         null, null, null, null);
         mCursor.moveToFirst();
-        Book book = new Book(mCursor.getInt(0), mCursor.getString(1), mCursor.getString(2));
+        String s = mCursor.getString(4);
+        Double[] doub = new Double[2];
+        doub[0] = Double.parseDouble(s.substring(6,17));
+        doub[1] = Double.parseDouble(s.substring(23));
+        Alarm alarm = new Alarm(mCursor.getString(1), doub ,mCursor.getString(2), mCursor.getWantsAllOnMoveCalls(3));
         mCursor.close();
-        return book;
+        return alarm;
     }
 
     //---updates a contact---
-    public void updateBook(int id, String title, String author) {
+    public void updateAlarm(int id, String title, String location) {
         ContentValues args = new ContentValues();
         args.put(KEY_TITLE, title);
-        args.put(KEY_AUTHOR, author);
+        args.put(KEY_LOCATION, location);
         db.update(DATABASE_TABLE, args, KEY_ROWID + "=" + id, null);
     }
 
