@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -14,6 +15,7 @@ import android.widget.ListView;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.LinkedList;
 
 /*Jason Karos, Brian Ward, Camden Wagner
 * WakeMeWhen
@@ -22,12 +24,12 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
+    private static final String TAG = "MainActivity: ";
     ListView mListView;
-    ArrayList mArrayList;
+    ArrayList<Alarm> mAlarmList;
     AlarmAdapter mAdapter;
     Context mContext;
     DBAdapter db;
-    int ALARM_CREATE_REQUEST = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,10 +42,10 @@ public class MainActivity extends AppCompatActivity {
         db.open();
 
         //retrieve alarms
-        final ArrayList<Alarm> mArrayList = db.getAllAlarms();
+        final ArrayList<Alarm> mAlarmList = db.getAllAlarms();
 
         //create new adapter and populate with AlarmList
-        mAdapter = new AlarmAdapter(this, mArrayList);
+        mAdapter = new AlarmAdapter(this, mAlarmList);
         mListView.setAdapter(mAdapter);
 
         final Context context = this;
@@ -52,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 // get user selection
-                Alarm selectedAlarm = mArrayList.get(position);
+                Alarm selectedAlarm = mAlarmList.get(position);
 
                 // create new intent
                 Intent detailIntent = new Intent(context, AlarmEdit.class);
@@ -72,11 +74,13 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
     @Override
+
+    //opens mapsactivity
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.add_alarm:
-                Intent intent = new Intent(this, AlarmEdit.class);
-                startActivityForResult(intent, ALARM_CREATE_REQUEST);
+                Intent i = new Intent(this, MapsActivity.class);
+                startActivity(i);
         }
         return false;
     }

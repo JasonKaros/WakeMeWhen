@@ -98,7 +98,7 @@ public class DBAdapter {
                 KEY_LATITUDE, KEY_LONGITUDE, KEY_DISTANCE, KEY_V_FLAG, KEY_ADDRESS},
                 null, null, null, null, null);
         alarms.moveToFirst();
-        ArrayList alarmList = new ArrayList();
+        ArrayList<Alarm> alarmList = new ArrayList();
 
         while (!alarms.isAfterLast()){
             double lat = alarms.getDouble(2);
@@ -120,7 +120,7 @@ public class DBAdapter {
         alarmCursor.moveToFirst();
         double lat = alarmCursor.getDouble(2);
         double lon = alarmCursor.getDouble(3);
-        Double[] latLonArray = new Double[] {lat, lon};
+        Double[] latLonArray = new Double[] {lat,lon};
         Alarm alarm = new Alarm(alarmCursor.getString(1), latLonArray, alarmCursor.getInt(4),
                 alarmCursor.getInt(5),alarmCursor.getString(6));
         alarmCursor.close();
