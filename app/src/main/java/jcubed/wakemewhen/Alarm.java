@@ -10,20 +10,14 @@ public class Alarm {
     private Double[] location = new Double[2];
     private String address = null;
     private int distance;
-    private int time;
-    private String media = "someDefaultMediaPath";
-    private boolean timeFlag = false;
     private boolean vibrateFlag = true;
     private boolean isActive = false;
 
-    Alarm(String n, Double[] loc, int d, int t, String m, boolean tFlag, boolean vFlag){
+    Alarm(String n, Double[] loc, int d, boolean vFlag){
         name = n;
         location = loc;
         address = "lat = " + loc[0].toString() + "\nlong = " + loc[1].toString();
         distance = d;
-        time = t;
-        media = m;
-        timeFlag = tFlag;
         vibrateFlag = vFlag;
     }
 
@@ -73,30 +67,6 @@ public class Alarm {
 
     public void setDistance(int distance) {
         this.distance = distance;
-    }
-
-    public int getTime() {
-        return time;
-    }
-
-    public void setTime(int time) {
-        this.time = time;
-    }
-
-    public String getMedia() {
-        return media;
-    }
-
-    public void setMedia(String media) {
-        this.media = media;
-    }
-
-    public boolean isTimeFlag() {
-        return timeFlag;
-    }
-
-    public void setTimeFlag(boolean timeFlag) {
-        this.timeFlag = timeFlag;
     }
 
     public boolean isVibrateFlag() {
