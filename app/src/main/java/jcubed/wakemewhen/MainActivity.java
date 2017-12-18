@@ -26,17 +26,20 @@ public class MainActivity extends AppCompatActivity {
     ArrayList mArrayList;
     AlarmAdapter mAdapter;
     Context mContext;
-    DBAdapter mDatabase;
+    DBAdapter db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         mListView = (ListView) findViewById(R.id.alarm_lv);
-        mDatabase = new DBAdapter(this);
+
+        //Create new table
+        db = new DBAdapter(this);
+        db.open();
 
         //retrieve alarms
-        final List<Alarm> alarmList = mDatabase.getAllAlarms();
+        final List<Alarm> alarmList = db.getAllAlarms();
 
         //create new adapter and populate with AlarmList
         mAdapter = new AlarmAdapter(this, mArrayList);
