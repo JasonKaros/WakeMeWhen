@@ -95,8 +95,8 @@ public class DBAdapter {
         while (!alarms.isAfterLast()){
             String s = alarms.getString(4);
             Double[] doub = new Double[2];
-            //doub[0] = //substring of lat;
-            //doub[0] = //substring of long;
+            doub[0] = Double.parseDouble(s.substring(6,17));
+            doub[1] = Double.parseDouble(s.substring(23));
             alarmList.add(new Alarm(alarms.getString(1), doub, alarms.getString(2), alarms.getWantsAllOnMoveCalls(3)));
             alarms.moveToNext();
         }
@@ -109,9 +109,10 @@ public class DBAdapter {
                                 KEY_TITLE, KEY_LOCATION}, KEY_ROWID + "=" + id, null,
                         null, null, null, null);
         mCursor.moveToFirst();
+        String s = mCursor.getString(4);
         Double[] doub = new Double[2];
-        //doub[0] = //substring of lat;
-        //doub[0] = //substring of long;
+        doub[0] = Double.parseDouble(s.substring(6,17));
+        doub[1] = Double.parseDouble(s.substring(23));
         Alarm alarm = new Alarm(mCursor.getString(1), doub ,mCursor.getString(2), mCursor.getWantsAllOnMoveCalls(3));
         mCursor.close();
         return alarm;
