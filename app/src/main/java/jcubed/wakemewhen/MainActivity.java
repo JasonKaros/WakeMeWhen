@@ -14,6 +14,7 @@ import android.widget.ListView;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.LinkedList;
 
 /*Jason Karos, Brian Ward, Camden Wagner
 * WakeMeWhen
@@ -23,7 +24,7 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
 
     ListView mListView;
-    ArrayList mArrayList;
+    ArrayList<Alarm> mAlarmList;
     AlarmAdapter mAdapter;
     Context mContext;
     DBAdapter db;
@@ -39,10 +40,10 @@ public class MainActivity extends AppCompatActivity {
         db.open();
 
         //retrieve alarms
-        final List<Alarm> alarmList = db.getAllAlarms();
+        final ArrayList<Alarm> mAlarmList = db.getAllAlarms();
 
         //create new adapter and populate with AlarmList
-        mAdapter = new AlarmAdapter(this, mArrayList);
+        mAdapter = new AlarmAdapter(this, mAlarmList);
         mListView.setAdapter(mAdapter);
 
         final Context context = this;
@@ -51,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 // get user selection
-                Alarm selectedAlarm = alarmList.get(position);
+                Alarm selectedAlarm = mAlarmList.get(position);
 
                 // create new intent
                 Intent detailIntent = new Intent(context, AlarmEdit.class);
