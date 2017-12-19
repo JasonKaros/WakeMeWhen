@@ -71,7 +71,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_begin="192dp" />
+        app:layout_constraintGuide_begin="206dp" />
 
     <CheckBox
         android:id="@+id/vibrate_chk"
@@ -85,7 +85,7 @@
         app:layout_constraintTop_toBottomOf="@+id/distance_slider" />
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/btn_cancel"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginBottom="8dp"
@@ -100,7 +100,7 @@
         app:layout_constraintTop_toBottomOf="@+id/vibrate_chk" />
 
     <Button
-        android:id="@+id/button3"
+        android:id="@+id/btn_confirm"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginBottom="8dp"
@@ -108,7 +108,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="32dp"
         android:backgroundTint="@android:color/holo_green_dark"
-        android:text="Make Alarm"
+        android:text="Save"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/guideline"

@@ -11,6 +11,7 @@ import android.util.Log;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import jcubed.wakemewhen.Alarm;
 
 public class DBAdapter {
     private static final String KEY_ROWID = "_id";
@@ -113,10 +114,13 @@ public class DBAdapter {
             double lat = alarms.getDouble(2);
             double lon = alarms.getDouble(3);
             Double[] latLonArray = new Double[]{lat, lon};
-            alarmList.add(new Alarm(alarms.getString(1), latLonArray, alarms.getInt(4), alarms.getInt(5),
-                    alarms.getInt(6), alarms.getString(2)));
+            Alarm alarm = new Alarm(alarms.getString(1), latLonArray, alarms.getInt(4), alarms.getInt(5),
+                    alarms.getInt(6), alarms.getString(2));
+            alarm.setId(alarms.getInt(0));
+            alarmList.add(alarm);
             alarms.moveToNext();
         }
+        alarms.close();
         return alarmList;
     }
     //---retrieves a particular alarm by id---
@@ -130,8 +134,9 @@ public class DBAdapter {
         double lat = alarmCursor.getDouble(2);
         double lon = alarmCursor.getDouble(3);
         Double[] latLonArray = new Double[] {lat,lon};
-        Alarm alarm = new Alarm(alarmCursor.getString(1), latLonArray, alarmCursor.getInt(4),
-                alarmCursor.getInt(5), alarmCursor.getInt(6),alarmCursor.getString(2));
+        Alarm alarm = new Alarm(alarmCursor.getString(1), latLonArray, alarmCursor.getInt(4), alarmCursor.getInt(5),
+                alarmCursor.getInt(6), alarmCursor.getString(2));
+        alarm.setId(alarmCursor.getInt(0));
         alarmCursor.close();
         return alarm;
     }

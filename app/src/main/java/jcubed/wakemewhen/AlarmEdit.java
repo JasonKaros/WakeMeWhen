@@ -12,12 +12,22 @@ public class AlarmEdit extends AppCompatActivity {
     private double latitude;
     private double longitude;
     private String address;
+    private DBAdapter db;
+    private int ALARM_ID;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_alarm_edit);
+
+        //get db
+        db = new DBAdapter(this);
+        db.open();
+
+        Intent i = getIntent();
+
+        ALARM_ID = i.getIntExtra("id", -1);
 
         //getting lat-long doubles from the MapActivity
         Intent intent = getIntent();

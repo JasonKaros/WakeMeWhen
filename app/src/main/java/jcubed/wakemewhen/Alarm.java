@@ -5,7 +5,7 @@ package jcubed.wakemewhen;
  */
 
 public class Alarm {
-    private double id;
+    private int id;
     private String name;
     private Double[] location = new Double[2];
     private String address = null;
@@ -26,7 +26,7 @@ public class Alarm {
         return id;
     }
 
-    public void setId(double id) {
+    public void setId(int id) {
         this.id = id;
     }
 
