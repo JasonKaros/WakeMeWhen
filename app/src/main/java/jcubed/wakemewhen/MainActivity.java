@@ -69,6 +69,7 @@ public class MainActivity extends AppCompatActivity {
 
                 // 3
                 detailIntent.putExtra("id", usr_Alarm.getId());
+                Log.d(TAG, Integer.toString(usr_Alarm.getId()));
                 detailIntent.putExtra("req_id", 2);
 
                 // 4
@@ -89,8 +90,16 @@ public class MainActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             case R.id.add_alarm:
                 Intent i = new Intent(this, MapsActivity.class);
+                i.putExtra("req_id", 1);
                 startActivity(i);
+                break;
+            case R.id.delete_alarms:
+                deleteAllAlarms();
+                break;
         }
         return false;
+    }
+    public void deleteAllAlarms(){
+
     }
 }

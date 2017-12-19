@@ -3,4 +3,6 @@
     android:id = "@+id/option_menu">
     <item android:id = "@+id/add_alarm"
         android:title = "Add Alarm" />
+    <item android:id="@+id/delete_alarms"
+        android:title="Delete All Alarms"/>
 </menu>

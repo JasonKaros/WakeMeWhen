@@ -7,6 +7,7 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.location.LocationProvider;
+import android.nfc.Tag;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
@@ -46,9 +47,18 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     static final String LATITUTDE = "latitude";
     static final String LONGITUDE = "longitude";
     static final String ADDRESS = "address";
+    private int REQUEST_ID;
+    private int ALARM_ID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        Intent i = getIntent();
+
+        REQUEST_ID = i.getIntExtra("req_id", -1);
+        ALARM_ID = i.getIntExtra("id", -1);
+        Log.d(TAG, Integer.toString(REQUEST_ID));
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
@@ -99,6 +109,14 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     Intent i = new Intent(MapsActivity.this, AlarmEdit.class);
                     i.putExtra(LATITUTDE, alarmLatLong[0]);
                     i.putExtra(LONGITUDE, alarmLatLong[1]);
+                    if (REQUEST_ID == 1){
+                        i.putExtra("req_id", 1);
+                    } else if (REQUEST_ID == 2){
+                        i.putExtra("req_id", 2);
+                    } else if (REQUEST_ID == 3){
+                        i.putExtra("req_id", 3);
+                        i.putExtra("id", ALARM_ID);
+                    }
                     if (hasAddress) { i.putExtra(ADDRESS, addressString); }
                     startActivity(i);
                 }

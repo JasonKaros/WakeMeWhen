@@ -22,7 +22,7 @@ public class Alarm {
         isActive = act;
     }
 
-    public double getId() {
+    public int getId() {
         return id;
     }
 
