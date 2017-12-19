@@ -29,7 +29,7 @@ public class MainActivity extends AppCompatActivity {
     ArrayList<Alarm> mAlarmList;
     AlarmAdapter mAdapter;
     DBAdapter db;
-    int EDIT_ALARM_REQUEST = 1;
+    int EDIT_ALARM_REQUEST = 2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
