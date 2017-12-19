@@ -100,6 +100,19 @@ public class MainActivity extends AppCompatActivity {
         return false;
     }
     public void deleteAllAlarms(){
+        db.dropTable();
+        db.close();
+
+        db = new DBAdapter(this);
+        db.open();
+
+        mAlarmList = db.getAllAlarms();
+
+        //create new adapter and populate with AlarmList
+        mAdapter = new AlarmAdapter(this, mAlarmList);
+        mListView.setAdapter(mAdapter);
+
+        mListView.deferNotifyDataSetChanged();
 
     }
 }

@@ -134,7 +134,7 @@ public class DBAdapter {
         double lat = alarmCursor.getDouble(2);
         double lon = alarmCursor.getDouble(3);
         Double[] latLonArray = new Double[] {lat,lon};
-        Alarm alarm = new Alarm(alarmCursor.getString(1), latLonArray, alarmCursor.getInt(4), alarmCursor.getInt(5),
+        Alarm alarm = new Alarm(alarmCursor.getString(1), latLonArray, alarmCursor.getInt(3), alarmCursor.getInt(5),
                 alarmCursor.getInt(6), alarmCursor.getString(2));
         alarm.setId(alarmCursor.getInt(0));
         alarmCursor.close();
@@ -148,6 +148,7 @@ public class DBAdapter {
         args.put(KEY_TITLE, alarm.getName());
         args.put(KEY_ADDRESS, alarm.getAddress());
         args.put(KEY_DISTANCE, alarm.getDistance());
+        Log.d(TAG, Integer.toString(alarm.getDistance()));
         args.put(KEY_LATITUDE, lat_long[0]);
         args.put(KEY_LONGITUDE, lat_long[1]);
         args.put(KEY_V_FLAG, alarm.isVibrate());

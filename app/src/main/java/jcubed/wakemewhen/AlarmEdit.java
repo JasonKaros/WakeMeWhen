@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.EditText;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -17,7 +18,7 @@ import org.w3c.dom.Text;
 public class AlarmEdit extends AppCompatActivity {
 
     private Alarm usrAlarm;
-    private final String TAG = "AlarmEdit: ";
+    private final String TAG = "AlarmEdit";
     private double latitude;
     private double longitude;
     private String address;
@@ -27,6 +28,8 @@ public class AlarmEdit extends AppCompatActivity {
     private Alarm USR_ALARM;
     private SeekBar dBar;
     private Intent intent;
+    private EditText et;
+    private CheckBox vChk;
     private Boolean isAddrEditing = false;
 
 
@@ -41,15 +44,18 @@ public class AlarmEdit extends AppCompatActivity {
         db.open();
 
         dBar = (SeekBar)findViewById(R.id.distance_slider);
+        vChk = findViewById(R.id.vibrate_chk);
+        et = (EditText)findViewById(R.id.alarmName_et);
         final TextView usrD = (TextView)findViewById(R.id.usrDistance_tv);
 
         intent = getIntent();
 
         REQUEST_ID = intent.getIntExtra("req_id", -1);
 
-        //getting lat-long doubles from the MapActivity
+        //We are creating a new alarm
         if (REQUEST_ID == 1) {
             Log.d(TAG, "Intent From AddBook");
+            //get location and address from MapActivity intent
             latitude = intent.getDoubleExtra(MapsActivity.LATITUTDE, 0);
             longitude = intent.getDoubleExtra(MapsActivity.LONGITUDE, 0);
             if (intent.hasExtra(MapsActivity.ADDRESS)) {
@@ -57,7 +63,11 @@ public class AlarmEdit extends AppCompatActivity {
             } else{ address = "Location exists, partial address not displayable";}
             Log.d(TAG, "Latitude: " + String.valueOf(latitude)
                     + ", Longitude: " + String.valueOf(longitude));
-        } else if (REQUEST_ID == 2) {
+            Button temp = findViewById(R.id.addr_btn);
+            temp.setText(address);
+        }
+        //we are editing an existing alarm
+        else if (REQUEST_ID == 2) {
             Log.d(TAG, "Intent From Main Activity");
 
             ALARM_ID = intent.getIntExtra("id", -1);
@@ -73,9 +83,18 @@ public class AlarmEdit extends AppCompatActivity {
             temp.setText(USR_ALARM.getAddress());
 
             //handle slider
+            Log.d(TAG, Integer.toString(USR_ALARM.getDistance()));
             dBar.setProgress(USR_ALARM.getDistance());
             usrD.setText(Integer.toString(USR_ALARM.getDistance()));
-        } else if (REQUEST_ID == 3){
+
+            //handle edit text
+            et.setText(USR_ALARM.getName());
+
+            //handle check box
+            vChk.setChecked(USR_ALARM.isVibrate() == 1);
+        }
+        //we are editing the slected address of an either new or existing alarm
+        else if (REQUEST_ID == 3){
             Log.d(TAG, "Intent From Edit Address");
             latitude = intent.getDoubleExtra(MapsActivity.LATITUTDE, 0);
             longitude = intent.getDoubleExtra(MapsActivity.LONGITUDE, 0);
@@ -100,6 +119,12 @@ public class AlarmEdit extends AppCompatActivity {
             //handle slider
             dBar.setProgress(USR_ALARM.getDistance());
             usrD.setText(Integer.toString(USR_ALARM.getDistance()));
+
+            //handle edit text
+            et.setText(USR_ALARM.getName());
+
+            //handle check box
+            vChk.setChecked(USR_ALARM.isVibrate() == 1);
         } else {
             Log.d(TAG, "Error Processing Intent");
             //intent back to MainActivity
@@ -142,13 +167,15 @@ public class AlarmEdit extends AppCompatActivity {
     }
     public void BtnAddrClicked(View view){
 
-        REQUEST_ID = 3;
-
         Intent i = new Intent(this, MapsActivity.class);
         Log.d(TAG, "REQ ID FOR BTNADDR"+Integer.toString(REQUEST_ID));
-        i.putExtra("req_id", REQUEST_ID);
-        i.putExtra("id", USR_ALARM.getId());
 
+        if (REQUEST_ID == 2) {
+            i.putExtra("id", USR_ALARM.getId());
+            REQUEST_ID = 3;
+        }
+
+        i.putExtra("req_id", REQUEST_ID);
         startActivity(i);
     }
     public void BtnSaveClicked(View view){
@@ -157,14 +184,13 @@ public class AlarmEdit extends AppCompatActivity {
         lat_lon[0] = latitude;
         lat_lon[1]= longitude;
         //get vibrate flag
-        CheckBox vChk = findViewById(R.id.vibrate_chk);
         int vFlag = 0;
         if (vChk.isChecked()){
             vFlag = 1;
         }
 
-        if (REQUEST_ID == 1) {
-            Alarm newAlarm = new Alarm("Name", lat_lon, dBar.getProgress(), vFlag, 1, address);
+        if (REQUEST_ID == 1 || REQUEST_ID == 4) {
+            Alarm newAlarm = new Alarm(et.getText().toString(), lat_lon, dBar.getProgress(), vFlag, 1, address);
             db.addAlarm(newAlarm);
             Toast.makeText(this, "'"+newAlarm.getName()+"' Created", Toast.LENGTH_SHORT).show();
         } else if (REQUEST_ID == 2 || REQUEST_ID == 3){
@@ -173,12 +199,21 @@ public class AlarmEdit extends AppCompatActivity {
                 USR_ALARM.setLocation(lat_lon);
                 Log.d(TAG, USR_ALARM.getLocation().toString());
             }
-            //USR_ALARM.setName(nameEditTextValue);
+            Log.d(TAG, Integer.toString(dBar.getProgress()));
             USR_ALARM.setDistance(dBar.getProgress());
             USR_ALARM.setVibrate(vFlag);
+            USR_ALARM.setName(et.getText().toString());
             db.updateAlarm(USR_ALARM);
             Toast.makeText(this, "'"+USR_ALARM.getName()+"' Updated", Toast.LENGTH_SHORT).show();
         }
+        db.close();
+
+        Intent i = new Intent(this, MainActivity.class);
+        i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(i);
+    }
+    public void BtnDeleteClicked(View view){
+        db.deleteAlarm(USR_ALARM);
         db.close();
 
         Intent i = new Intent(this, MainActivity.class);
