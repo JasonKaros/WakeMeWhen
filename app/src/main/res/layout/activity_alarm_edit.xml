@@ -42,7 +42,7 @@
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="96dp"
-        android:text="Distance"
+        android:text="0"
         android:textColor="@android:color/background_dark"
         android:textSize="32sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -55,13 +55,13 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="12dp"
         android:text="mi"
         android:textColor="@android:color/background_dark"
         android:textSize="20sp"
         app:layout_constraintBottom_toTopOf="@+id/distance_slider"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.4"
         app:layout_constraintStart_toEndOf="@+id/usrDistance_tv"
         app:layout_constraintTop_toTopOf="@+id/usrDistance_tv"
         app:layout_constraintVertical_bias="0.050000012" />
@@ -71,7 +71,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_begin="206dp" />
+        app:layout_constraintGuide_begin="192dp" />
 
     <CheckBox
         android:id="@+id/vibrate_chk"
@@ -91,10 +91,12 @@
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="32dp"
-        android:backgroundTint="@android:color/holo_red_dark"
+        android:layout_marginTop="16dp"
+        android:backgroundTint="?attr/colorPrimary"
         android:text="Cancel"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:onClick="BtnCancelClicked"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toTopOf="@+id/btn_delete"
         app:layout_constraintEnd_toStartOf="@+id/guideline"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/vibrate_chk" />
@@ -106,12 +108,28 @@
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="16dp"
         android:backgroundTint="@android:color/holo_green_dark"
         android:text="Save"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toTopOf="@+id/btn_delete"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/guideline"
         app:layout_constraintTop_toBottomOf="@+id/vibrate_chk" />
+
+    <Button
+        android:id="@+id/btn_delete"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:backgroundTint="@android:color/holo_red_dark"
+        android:text="DeleteButton"
+        android:textSize="18sp"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
 </android.support.constraint.ConstraintLayout>

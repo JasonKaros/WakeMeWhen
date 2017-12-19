@@ -69,6 +69,7 @@ public class MainActivity extends AppCompatActivity {
 
                 // 3
                 detailIntent.putExtra("id", usr_Alarm.getId());
+                detailIntent.putExtra("req_id", 2);
 
                 // 4
                 startActivityForResult(detailIntent, EDIT_ALARM_REQUEST);
