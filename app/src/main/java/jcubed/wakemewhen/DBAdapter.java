@@ -105,8 +105,8 @@ public class DBAdapter {
     public ArrayList<Alarm> getAllAlarms() {
         // query for alarms w/ columns: id, name, lat, long, distance, vflag, address
         Cursor alarms = db.query(DATABASE_TABLE, new String[] {KEY_ROWID, KEY_TITLE, KEY_ADDRESS,
-                        KEY_DISTANCE, KEY_LATITUDE, KEY_LONGITUDE, KEY_V_FLAG, KEY_ISACTIVE},
-                null, null, null, null, null);
+                        KEY_DISTANCE, KEY_LATITUDE, KEY_LONGITUDE, KEY_V_FLAG},
+                null, null, null, null, null, null);
         alarms.moveToFirst();
         ArrayList<Alarm> alarmList = new ArrayList();
 
@@ -129,7 +129,7 @@ public class DBAdapter {
                 db.query(true, DATABASE_TABLE, new String[] {KEY_ROWID, KEY_TITLE, KEY_ADDRESS,
                                 KEY_DISTANCE, KEY_LATITUDE, KEY_LONGITUDE, KEY_V_FLAG, KEY_ISACTIVE},
                         KEY_ROWID + "=" + id, null,
-                        null, null, null, null);
+                        null, null, null, null, null);
         alarmCursor.moveToFirst();
         double lat = alarmCursor.getDouble(2);
         double lon = alarmCursor.getDouble(3);

@@ -161,13 +161,16 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         //adds a marker at your current location (do we want this or not?)
 
         Location currentLoc = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-        LatLng p = new LatLng(currentLoc.getLatitude(), currentLoc.getLongitude());
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(p));
-        mMap.animateCamera(CameraUpdateFactory.zoomTo(10));
-        MarkerOptions myMarker = new MarkerOptions();
-        myMarker.position(p);
-        myMarker.title("Current Location");
-        mMap.addMarker(myMarker);
+        if (currentLoc != null) {
+            LatLng p = new LatLng(currentLoc.getLatitude(), currentLoc.getLongitude());
+            mMap.moveCamera(CameraUpdateFactory.newLatLng(p));
+            mMap.animateCamera(CameraUpdateFactory.zoomTo(10));
+            MarkerOptions myMarker = new MarkerOptions();
+            myMarker.position(p);
+            myMarker.title("Current Location");
+            mMap.addMarker(myMarker);
+        }
+
 
     }
 
