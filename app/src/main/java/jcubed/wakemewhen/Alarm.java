@@ -13,12 +13,13 @@ public class Alarm {
     private int vibrateFlag = 1;
     private int isActive = 0;
 
-    Alarm(String name, Double[] loc, int d, int vFlag, String addr){
+    Alarm(String name, Double[] loc, int d, int vFlag, int act, String addr){
         this.name = name;
         location = loc;
         distance = d;
         vibrateFlag = vFlag;
         address = addr;
+        isActive = act;
     }
 
     public double getId() {

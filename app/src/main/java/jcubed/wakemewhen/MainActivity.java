@@ -41,6 +41,14 @@ public class MainActivity extends AppCompatActivity {
         db = new DBAdapter(this);
         db.open();
 
+//        Double[] lat_long = new Double[2];
+//        lat_long[0] = 2.222;
+//        lat_long[1] = -7.66;
+//        Alarm alarm1 = new Alarm("Alarm1", lat_long, 6, 1, 0, "102 Grove Ave, Leominster MA, 01453");
+//        Alarm alarm2 = new Alarm("Alarm2", lat_long, 6, 1, 0, "222 Grove Ave, Leominster MA, 01453");
+//        db.addAlarm(alarm1);
+//        db.addAlarm(alarm2);
+
         //retrieve alarms
         final ArrayList<Alarm> mAlarmList = db.getAllAlarms();
 
