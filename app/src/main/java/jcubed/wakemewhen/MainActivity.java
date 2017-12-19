@@ -28,8 +28,8 @@ public class MainActivity extends AppCompatActivity {
     ListView mListView;
     ArrayList<Alarm> mAlarmList;
     AlarmAdapter mAdapter;
-    Context mContext;
     DBAdapter db;
+    int EDIT_ALARM_REQUEST = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
 //        db.addAlarm(alarm2);
 
         //retrieve alarms
-        final ArrayList<Alarm> mAlarmList = db.getAllAlarms();
+        mAlarmList = db.getAllAlarms();
 
         //create new adapter and populate with AlarmList
         mAdapter = new AlarmAdapter(this, mAlarmList);
@@ -61,17 +61,17 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                // get user selection
-                Alarm selectedAlarm = mAlarmList.get(position);
+                // 1
+                Alarm usr_Alarm = mAlarmList.get(position);
 
-                // create new intent
+                // 2
                 Intent detailIntent = new Intent(context, AlarmEdit.class);
 
-                // put identifying information
-                detailIntent.putExtra("alarm_id", id);
+                // 3
+                detailIntent.putExtra("id", usr_Alarm.getId());
 
-                // start activity
-                startActivity(detailIntent);
+                // 4
+                startActivityForResult(detailIntent, EDIT_ALARM_REQUEST);
             }
         });
     }
